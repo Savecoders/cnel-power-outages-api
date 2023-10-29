@@ -3,10 +3,10 @@ import axios from "axios";
 import pdfjs from "pdfjs-dist";
 
 // download and analyze the PDF
-async function getPdfContent(pdfUrl) {
+async function getPdfContent(pdf_url) {
   try {
     // Download the PDF from the URL using axios
-    const response = await axios.get(pdfUrl, {
+    const response = await axios.get(pdf_url, {
       responseType: "arraybuffer",
     });
     const data = new Uint8Array(response.data);

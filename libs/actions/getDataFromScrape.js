@@ -22,7 +22,7 @@ async function getDataFromScrape() {
     const data = [];
     $rows.forEach(($row) => {
       data.push({
-        pdfUrl: $row.href,
+        pdf_url: $row.href,
         title: $row.textContent,
       });
     });
