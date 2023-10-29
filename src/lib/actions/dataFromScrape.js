@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
-import readPdf from "./content/readPdf.js";
-async function getDataFromWebPage() {
+
+async function getDataFromScrape() {
   const browser = await puppeteer.launch({
     headless: true,
     PUPPETEER_DISABLE_HEADLESS_WARNING: true,
@@ -22,22 +22,15 @@ async function getDataFromWebPage() {
     const data = [];
     $rows.forEach(($row) => {
       data.push({
-        urlPdf: $row.href,
+        pdfUrl: $row.href,
         title: $row.textContent,
       });
     });
     return data;
   });
 
-  // pdfs of power outages list in the province
-  console.log(urlsPdfsPPA);
-
-  urlsPdfsPPA.forEach(async ({ urlPdf }) => {
-    const data = await readPdf(urlPdf);
-    console.log(data);
-  });
-
   await browser.close();
+  return urlsPdfsPPA;
 }
 
-getDataFromWebPage();
+export default getDataFromScrape;
