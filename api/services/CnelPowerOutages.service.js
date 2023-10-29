@@ -1,17 +1,17 @@
 import getDataOfCnel from "../../libs/actions/getFilterOfCnel.js";
 
 export default class CnelPoweroutagesService {
+  data = [];
+
   constructor() {
     this.data = [];
   }
 
-  async getData() {
+  async setScrapeData() {
     this.data = await getDataOfCnel();
+  }
+
+  get data() {
     return this.data;
   }
 }
-
-const cnelPoweroutagesService = new CnelPoweroutagesService();
-const data = await cnelPoweroutagesService.getData();
-
-console.log(data);

@@ -1,7 +1,7 @@
 import getPdfContent from "./getPdfContent.js";
 import getDataFromScrape from "./getDataFromScrape.js";
 import mapingTimeSector from "../controler/mapingTimeSector.js";
-import getSliceCity from "./getSliceCity.js";
+import getSliceLocation from "./getSliceLocation.js";
 
 async function getDataOfCnel() {
   const data = await getDataFromScrape();
@@ -11,10 +11,10 @@ async function getDataOfCnel() {
     data.map(async ({ pdf_url, title }) => {
       const content = await getPdfContent(pdf_url);
       const power_outages = mapingTimeSector(content);
-      const city = getSliceCity(title);
+      const localtion = getSliceLocation(title);
       return {
         pdf_url,
-        city,
+        localtion,
         power_outages,
       };
     })
