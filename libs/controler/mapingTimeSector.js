@@ -1,7 +1,9 @@
 function mapingTimeSector(content = "") {
   // Regex for time
   const RegexTime = /\d{2}:\d{2}\s+a\d{2}:\d{2}/g;
-  const sectors = content.split(",");
+  // split , and .
+  const RegexSector = /[.,/]/;
+  const sectors = content.split(RegexSector);
   const timeAndSectors = {};
 
   let isNewTime = false;
@@ -16,7 +18,10 @@ function mapingTimeSector(content = "") {
       isNewTime = true;
       lastTime = time;
     } else if (lastTime !== "") {
-      timeAndSectors[lastTime].push(sector);
+      let noSpace = sector.trim();
+      let capitalize =
+        noSpace.charAt(0).toUpperCase() + noSpace.toLocaleLowerCase().slice(1);
+      timeAndSectors[lastTime].push(capitalize);
       isNewTime = false;
     }
   }
