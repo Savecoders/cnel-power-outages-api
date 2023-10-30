@@ -11,11 +11,18 @@ import {
 // validation handlers
 import { validatorHandler } from "../middleware/validator.handler.js";
 
-// services
 const router = Router();
-const cnelPoweroutagesService = new CnelPoweroutagesService();
 
+// cron job
+import cron from "node-cron";
+
+// services
+const cnelPoweroutagesService = new CnelPoweroutagesService();
 await cnelPoweroutagesService.setScrapeData();
+
+cron.schedule("* 12 * * *", async () => {
+  await cnelPoweroutagesService.setScrapeData();
+});
 
 // endpoints
 // return all data
