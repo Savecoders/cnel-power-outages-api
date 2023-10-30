@@ -11,10 +11,10 @@ async function getDataOfCnel() {
     data.map(async ({ pdf_url, title }) => {
       const content = await getPdfContent(pdf_url);
       const power_outages = mapingTimeSector(content);
-      const localtion = getSliceLocation(title);
+      const location = getSliceLocation(title);
       return {
         pdf_url,
-        localtion,
+        location,
         power_outages,
       };
     })

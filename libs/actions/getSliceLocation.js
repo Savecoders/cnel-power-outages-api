@@ -1,5 +1,6 @@
 function getSliceLocation(title) {
   // get content in ()
+  title = title.toLowerCase();
   const RegexCity = /\(([^)]+)\)/;
   const location = title.match(RegexCity);
 

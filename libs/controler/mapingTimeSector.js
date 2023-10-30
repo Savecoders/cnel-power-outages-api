@@ -11,24 +11,28 @@ function mapingTimeSector(content = "") {
 
   for (let sector of sectors) {
     // find time
-    const time = sector.match(RegexTime);
+    const timeInLine = sector.match(RegexTime);
 
-    if (time && !isNewTime) {
-      timeAndSectors[time] = [];
-      isNewTime = true;
-      lastTime = time;
+    if (timeInLine) {
+      timeAndSectors[timeInLine] = [];
+      lastTime = timeInLine;
+
+      let noSpace = sector.trim();
+      let capitalize = noSpace.toLocaleLowerCase();
+      let parts = capitalize.split(RegexTime);
+
+      timeAndSectors[lastTime].push(parts.at(-1));
     } else if (lastTime !== "") {
       let noSpace = sector.trim();
-      let capitalize =
-        noSpace.charAt(0).toUpperCase() + noSpace.toLocaleLowerCase().slice(1);
+      let capitalize = noSpace.toLocaleLowerCase();
       timeAndSectors[lastTime].push(capitalize);
-      isNewTime = false;
     }
   }
 
   // mapping time and sectors
   const mapping = Object.entries(timeAndSectors).map((item) => {
-    const [time, sectors] = item;
+    let [time, sectors] = item;
+    sectors = sectors.filter((sector) => sector.length > 3);
     return {
       time,
       sectors,
