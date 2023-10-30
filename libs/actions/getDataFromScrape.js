@@ -1,13 +1,22 @@
 import puppeteer from "puppeteer";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 async function getDataFromScrape() {
   const browser = await puppeteer.launch({
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
     headless: true,
     PUPPETEER_DISABLE_HEADLESS_WARNING: true,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--PUPPETEER_DISABLE_HEADLESS_WARNING",
+      "--no-zygote",
+      "--single-process",
     ],
   });
   const page = await browser.newPage();
