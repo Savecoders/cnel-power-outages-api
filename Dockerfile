@@ -6,6 +6,6 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm install
 
 CMD [ "node", "api/index.js" ]
