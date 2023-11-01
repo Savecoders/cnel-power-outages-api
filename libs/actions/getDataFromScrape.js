@@ -27,14 +27,24 @@ async function getDataFromScrape() {
   const urlsPdfsPPA = await page.evaluate(() => {
     const $ = document.querySelector.bind(document);
     const $table = $(".entry-content");
-    const $rows = $table.querySelectorAll("a");
-    const data = [];
-    $rows.forEach(($row) => {
-      data.push({
-        pdf_url: $row.href,
-        title: $row.textContent,
-      });
-    });
+    const getChildren = [...$table.children];
+    // get pdfs and urls
+    const data = getChildren.reduce((acc, item) => {
+      if (item.tagName === "H4") {
+        const date = item.textContent;
+        const content = [];
+        acc.push({ date, content });
+      } else if (item.tagName === "P") {
+        if (item.querySelector("A")) {
+          const pdf_url = item.querySelector("a").href;
+          const title = item.querySelector("a").textContent;
+
+          acc[acc.length - 1].content.push({ title, pdf_url });
+        }
+      }
+      return acc;
+    }, []);
+
     return data;
   });
 

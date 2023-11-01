@@ -16,15 +16,23 @@ async function getPdfContent(pdf_url) {
 
     let content = "";
 
-    for (let pageNum = 1; pageNum <= pdfDocument.numPages; pageNum++) {
-      const page = await pdfDocument.getPage(pageNum);
-      const pageText = await page.getTextContent();
-      content += pageText.items.reduce((acc, item) => acc + item.str, content);
+    try {
+      for (let pageNum = 1; pageNum <= pdfDocument.numPages; pageNum++) {
+        const page = await pdfDocument.getPage(pageNum);
+        const pageText = await page.getTextContent();
+        content += pageText.items.reduce(
+          (acc, item) => acc + item.str,
+          content
+        );
+      }
+    } catch (error) {
+      content = "";
     }
 
     return content;
   } catch (error) {
-    return new Error("Error al descargar o analizar el PDF:", error);
+    //return new Error("Error al descargar o analizar el PDF:", error);
+    return "Error al descargar o analizar el PDF";
   }
 }
 

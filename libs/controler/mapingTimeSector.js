@@ -1,9 +1,10 @@
-function mapingTimeSector(content = "") {
+function mapingTimeSector(pdfContent = "") {
   // Regex for time
-  const RegexTime = /\d{2}:\d{2}\s+a\d{2}:\d{2}/g;
+  if (!pdfContent) return [];
+  const RegexTime = /\d{2}:\d{2}\s+[aA]\d{2}:\d{2}/g;
   // split , and .
   const RegexSector = /[.,/]/;
-  const sectors = content.split(RegexSector);
+  const sectors = pdfContent.split(RegexSector);
   const timeAndSectors = {};
 
   let isNewTime = false;
