@@ -1,4 +1,4 @@
-function getSliceLocation(title) {
+function sliceLocation(title) {
   // get content in ()
   title = title.toLowerCase();
   const RegexCity = /\(([^)]+)\)/;
@@ -7,4 +7,4 @@ function getSliceLocation(title) {
   return location ? location[1] : title.split(" ").at(-1).trim();
 }
 
-export default getSliceLocation;
+export default sliceLocation;
